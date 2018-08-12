@@ -1,5 +1,5 @@
 import Store, { thunk } from "repatch";
-import colors from "./colors";
+import config from "./config";
 
 const logger = store => next => reducer => {
   const state = store.getState()
@@ -24,27 +24,53 @@ const initialState = {
   board: {
     tiles: [
       {
+        // 0
         name: 'transparent',
+        isHidden: true,
       },
       {
+        // 1
         name: "free-tile",
-        color: colors["freeTile"]
+        isBuildable: true,
+        color: config.colors["freeTile"]
       },
       {
+        // 2
         name: "boundary",
         isCursorBlocker: true,
-        color: colors["boundaryTile"]
+        isBuildable: false,
+        color: config.colors["boundaryTile"]
       },
       {
+        // 3
         name: "wall",
         isBuildable: false,
-        color: colors["wall"]
+        color: config.colors["wall"]
+      },
+      {
+        // 4
+        name: "castle",
+        isBuildable: false,
+        color: config.colors["castle"]
+      },
+      {
+        // 5
+        name: "base",
+        isBuildable: true,
+        color: config.colors["base"]
+      },
+      {
+        // 6
+        name: "no-base",
+        isBuildable: true,
+        isHidden: true,
       },
     ],
 
     wallMap: undefined,
+    baseMap: undefined,
 
-    map: [
+    boardMap: [
       [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
       [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
       [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
@@ -60,7 +86,9 @@ const initialState = {
       [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
       [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
       [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
-    ]
+    ],
+
+    castles: []
   }
 };
 

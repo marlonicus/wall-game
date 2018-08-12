@@ -1,9 +1,9 @@
-import colors from "../colors";
+import config from "../config";
 import * as PIXI from "pixi.js";
 
 export default ({ width, height }) => {
   const graphic = new PIXI.Graphics();
-  graphic.beginFill(colors["bg"]);
+  graphic.beginFill(config.colors["bg"]);
   graphic.drawRect(0, 0, width, height);
   graphic.endFill();
   graphic.x = 0;

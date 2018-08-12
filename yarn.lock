@@ -1675,6 +1675,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flood-fill@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/flood-fill/-/flood-fill-0.1.1.tgz#54717b0ad42efbbc438e0e74b6e698888b902c81"
+
 for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"

@@ -5,9 +5,9 @@ export default ({ tiles }) => {
   const graphic = new PIXI.Graphics();
 
   return {
-    render: ({ wallMap }) => {
+    render: ({ baseMap = [] }) => {
       graphic.clear()
-      drawTiles({ graphic, tiles })(wallMap);
+      drawTiles({ graphic, tiles })(baseMap);
     },
     view: graphic
   }

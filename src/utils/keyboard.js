@@ -40,5 +40,6 @@ export default{
   up: keyboard(38),
   right: keyboard(39),
   down: keyboard(40),
-  space: keyboard(32)
+  space: keyboard(32),
+  c: keyboard(67)
 }

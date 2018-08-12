@@ -1,5 +1,6 @@
-import { min, max, set, view, pipe } from "ramda";
+import { min, reduce, max, set, view, pipe, clone, when, map, equals, always } from "ramda";
 import lenses from "../lenses";
+import floodFill from "../utils/flood-fill";
 
 const isValidTile = ({ state, x, y }) => {
   const boardMap = view(lenses.boardMap, state);
@@ -25,11 +26,38 @@ export const playerMove = ({ x, y }) => state => {
   return state;
 };
 
+const withBuildWall = ({ x, y }) => state => {
+  const wallMap = clone(view(lenses.wallMap, state));
+  wallMap[y][x] = 3;
+  return set(lenses.wallMap, wallMap)(state);
+};
+
+
+
+const tileMapMappedWithCastles = ({ tileMap, castles }) => {
+  return reduce((prev, { x, y }) => {
+    const walls = clone(prev)
+    walls[y][x] = 'c'
+    return walls;
+  }, tileMap, castles)
+}
+
+const withBasesFilled = state => {
+  const castles = view(lenses.castles, state)
+  const walls = clone(view(lenses.wallMap, state));
+  // const wallsWithCastles = tileMapMappedWithCastles({ tileMap: walls, castles })
+  const filledWalls = floodFill(walls, 0, 0, 6)
+  const flipBaseTiles = map(map(when(equals(0), always(5))))
+
+  return set(lenses.baseMap, flipBaseTiles(filledWalls), state)
+}
+
 export const playerBuild = () => state => {
   const targetX = view(lenses.cursorX, state);
   const targetY = view(lenses.cursorY, state);
-  const wallMap = view(lenses.wallMap, state);
-  wallMap[targetY][targetX] = 3;
 
-  return set(lenses.wallMap, wallMap)(state);
+  return pipe(
+    withBuildWall({ x: targetX, y: targetY }),
+    withBasesFilled,
+  )(state);
 };

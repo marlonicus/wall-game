@@ -6,8 +6,9 @@ export default {
 
   gameStarted: lensPath(['game', 'started']),
 
-  boardMap: lensPath(['board', 'map']),
   tiles: lensPath(['board', 'tiles']),
-
   wallMap: lensPath(['board', 'wallMap']),
+  boardMap: lensPath(['board', 'boardMap']),
+  baseMap: lensPath(['board', 'baseMap']),
+  castles: lensPath(['board', 'castles']),
 }
