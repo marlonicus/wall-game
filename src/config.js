@@ -9,14 +9,14 @@ const pallette = [
 ];
 
 export default {
-  tileSize: 40,
+  tileSize: 20,
   colors: {
     bg: pallette[4],
     boundaryTile: 0x000000,
     freeTile: pallette[4],
     wall: pallette[0],
     cursor: pallette[1],
-    castle: pallette[3],
-    base: pallette[2],
+    castle: 0xF7B32B,
+    base: pallette[1],
   }
 }

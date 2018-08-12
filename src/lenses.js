@@ -5,7 +5,10 @@ export default {
   cursorY: lensPath(['cursor', 'y']),
 
   gameStarted: lensPath(['game', 'started']),
+  gameMode: lensPath(['game', 'mode']),
 
+  boardWidth: lensPath(['board', 'width']),
+  boardHeight: lensPath(['board', 'height']),
   tiles: lensPath(['board', 'tiles']),
   wallMap: lensPath(['board', 'wallMap']),
   boardMap: lensPath(['board', 'boardMap']),

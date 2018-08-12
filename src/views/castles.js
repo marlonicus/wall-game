@@ -7,6 +7,7 @@ export default ({ tiles }) => {
 
   return {
     render: ({ castles }) => {
+      graphic.clear();
       map(({ x, y, tileId }) => {
         drawTileXY({ graphic, tiles, x, y, tileId })
       })(castles)

@@ -41,5 +41,7 @@ export default{
   right: keyboard(39),
   down: keyboard(40),
   space: keyboard(32),
-  c: keyboard(67)
+  c: keyboard(67),
+  n: keyboard(78),
+  enter: keyboard(13),
 }

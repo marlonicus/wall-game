@@ -1,5 +1,6 @@
 import { playerMove, playerBuild } from "./player";
 import { debugBuildCastle } from "./debug"
+import { startGame, switchMode } from "./game"
 
 export const keyPress = direction => state => dispatch => {
   switch (direction) {
@@ -14,6 +15,12 @@ export const keyPress = direction => state => dispatch => {
 
     case "c":
       return dispatch(debugBuildCastle());
+
+    case "n":
+      return dispatch(startGame());
+
+    case "enter":
+      return dispatch(switchMode());
 
     case "space":
       return dispatch(playerBuild());

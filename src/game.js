@@ -7,26 +7,19 @@ import lenses from "./lenses";
 import config from "./config";
 
 import Cursor from "./views/cursor";
-import Walls from "./views/walls";
 import Background from "./views/background";
-import Board from "./views/board";
 import Castles from "./views/castles";
-import Base from "./views/base";
+import Tilesheet from "./views/tilesheet";
 
 const initGameObjects = ({ state, pixiApp }) => {
   const boardMap = view(lenses.boardMap, state);
   const tiles = view(lenses.tiles, state);
 
   const background = Background(pixiApp.renderer);
-  const board = Board({ tiles, boardMap });
+  const board = Tilesheet({ tiles });
   const castles = Castles({ tiles });
-  const base = Base({ tiles });
-
-  const walls = Walls({
-    width: length(head(boardMap)),
-    height: length(boardMap),
-    tiles
-  });
+  const base = Tilesheet({ tiles });
+  const walls = Tilesheet({ tiles });
 
   const cursor = Cursor();
 
@@ -46,12 +39,16 @@ export default ({ pixiApp }) => {
   const gameObjects = initGameObjects({ state: initialState, pixiApp });
 
   const render = state => {
+    gameObjects.board.render({
+      tileMap: view(lenses.boardMap, state)
+    });
+
     gameObjects.base.render({
-      baseMap: view(lenses.baseMap, state)
+      tileMap: view(lenses.baseMap, state)
     });
 
     gameObjects.walls.render({
-      wallMap: view(lenses.wallMap, state)
+      tileMap: view(lenses.wallMap, state)
     });
 
     gameObjects.castles.render({
@@ -77,6 +74,8 @@ export default ({ pixiApp }) => {
   Keyboard.down.press = () => store.dispatch(keyPress("down"));
   Keyboard.space.press = () => store.dispatch(keyPress("space"));
   Keyboard.c.press = () => store.dispatch(keyPress("c"));
+  Keyboard.n.press = () => store.dispatch(keyPress("n"));
+  Keyboard.enter.press = () => store.dispatch(keyPress("enter"));
 
   store.subscribe(() => render(store.getState()));
 
