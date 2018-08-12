@@ -1,8 +1,11 @@
 import { set, view, clone, map, always, pipe } from "ramda";
 import lenses from "../lenses";
-import { generateBoard } from "../boards";
-
-const randomize = (val, range = 4) => val + Math.ceil(Math.random() * range) - (range/2);
+import {
+  generateBoard,
+  generateTiles,
+  generateCastles,
+  generateBlock
+} from "../boards";
 
 export const startGame = () => state => {
   const newBoardMap = generateBoard({
@@ -12,22 +15,23 @@ export const startGame = () => state => {
 
   const emptyTileMap = map(map(always(0)))(newBoardMap);
 
-  const castles = [
-    { x: randomize(5), y: randomize(4), tileId: 4 },
-    { x: randomize(15), y: randomize(6), tileId: 4 },
-    { x: randomize(23), y: randomize(4), tileId: 4 },
-  ]
-
   return pipe(
+    // Board
+    set(lenses.tiles, generateTiles()),
+    set(lenses.castles, generateCastles()),
     set(lenses.boardMap, newBoardMap),
-    set(lenses.castles, castles),
     set(lenses.wallMap, emptyTileMap),
     set(lenses.baseMap, emptyTileMap),
+
+    // Build
+    set(lenses.build.currentBlock, generateBlock()),
+
+    // Game
     set(lenses.gameStarted, true)
   )(state);
 };
 
 export const switchMode = () => state => {
-  const gameMode = view(lenses.gameMode, state) === 'shoot' ? 'build' : 'shoot';
-  return set(lenses.gameMode, gameMode, state)
-}
+  const gameMode = view(lenses.gameMode, state) === "shoot" ? "build" : "shoot";
+  return set(lenses.gameMode, gameMode, state);
+};

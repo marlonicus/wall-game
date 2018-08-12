@@ -44,4 +44,6 @@ export default{
   c: keyboard(67),
   n: keyboard(78),
   enter: keyboard(13),
+  z: keyboard(90),
+  x: keyboard(88),
 }

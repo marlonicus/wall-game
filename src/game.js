@@ -14,13 +14,11 @@ import Debug from "./views/debug";
 
 const initGameObjects = ({ state, pixiApp }) => {
   const boardMap = view(lenses.boardMap, state);
-  const tiles = view(lenses.tiles, state);
-
   const background = Background(pixiApp.renderer);
-  const board = Tilesheet({ tiles });
-  const castles = Castles({ tiles });
-  const base = Tilesheet({ tiles });
-  const walls = Tilesheet({ tiles });
+  const board = Tilesheet();
+  const castles = Castles();
+  const base = Tilesheet();
+  const walls = Tilesheet();
   const cursor = Cursor();
   const debug = Debug();
 
@@ -41,25 +39,32 @@ export default ({ pixiApp }) => {
   const gameObjects = initGameObjects({ state: initialState, pixiApp });
 
   const render = state => {
+    const tiles = view(lenses.tiles, state);
+
     gameObjects.board.render({
-      tileMap: view(lenses.boardMap, state)
+      tileMap: view(lenses.boardMap, state),
+      tiles
     });
 
     gameObjects.base.render({
-      tileMap: view(lenses.baseMap, state)
+      tileMap: view(lenses.baseMap, state),
+      tiles
     });
 
     gameObjects.walls.render({
-      tileMap: view(lenses.wallMap, state)
+      tileMap: view(lenses.wallMap, state),
+      tiles
     });
 
     gameObjects.castles.render({
-      castles: view(lenses.castles, state)
+      castles: view(lenses.castles, state),
+      tiles
     });
 
     gameObjects.cursor.render({
       x: view(lenses.cursorX, state),
-      y: view(lenses.cursorY, state)
+      y: view(lenses.cursorY, state),
+      blockOutline: view(lenses.build.currentBlock, state),
     });
 
     gameObjects.debug.render(state)
@@ -80,6 +85,8 @@ export default ({ pixiApp }) => {
   Keyboard.space.press = () => store.dispatch(keyPress("space"));
   Keyboard.c.press = () => store.dispatch(keyPress("c"));
   Keyboard.n.press = () => store.dispatch(keyPress("n"));
+  Keyboard.z.press = () => store.dispatch(keyPress("z"));
+  Keyboard.x.press = () => store.dispatch(keyPress("x"));
   Keyboard.enter.press = () => store.dispatch(keyPress("enter"));
 
   store.subscribe(() => render(store.getState()));

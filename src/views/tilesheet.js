@@ -1,11 +1,11 @@
 import { drawTiles } from "../utils/tilesheet";
 import * as PIXI from "pixi.js";
 
-export default ({ tiles }) => {
+export default () => {
   const graphic = new PIXI.Graphics();
 
   return {
-    render: ({ tileMap }) => {
+    render: ({ tileMap, tiles }) => {
       graphic.clear()
       drawTiles({ graphic, tiles })(tileMap);
     },

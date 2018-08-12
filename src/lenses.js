@@ -14,4 +14,8 @@ export default {
   boardMap: lensPath(['board', 'boardMap']),
   baseMap: lensPath(['board', 'baseMap']),
   castles: lensPath(['board', 'castles']),
+
+  build: {
+    currentBlock: lensPath(['build', 'currentBlock']),
+  },
 }
