@@ -10,6 +10,7 @@ import Cursor from "./views/cursor";
 import Background from "./views/background";
 import Castles from "./views/castles";
 import Tilesheet from "./views/tilesheet";
+import Debug from "./views/debug";
 
 const initGameObjects = ({ state, pixiApp }) => {
   const boardMap = view(lenses.boardMap, state);
@@ -20,8 +21,8 @@ const initGameObjects = ({ state, pixiApp }) => {
   const castles = Castles({ tiles });
   const base = Tilesheet({ tiles });
   const walls = Tilesheet({ tiles });
-
   const cursor = Cursor();
+  const debug = Debug();
 
   return {
     background,
@@ -29,7 +30,8 @@ const initGameObjects = ({ state, pixiApp }) => {
     walls,
     cursor,
     castles,
-    base
+    base,
+    debug
   };
 };
 
@@ -59,6 +61,8 @@ export default ({ pixiApp }) => {
       x: view(lenses.cursorX, state),
       y: view(lenses.cursorY, state)
     });
+
+    gameObjects.debug.render(state)
   };
 
   pixiApp.stage.addChild(gameObjects.background.view);
@@ -67,6 +71,7 @@ export default ({ pixiApp }) => {
   pixiApp.stage.addChild(gameObjects.base.view);
   pixiApp.stage.addChild(gameObjects.castles.view);
   pixiApp.stage.addChild(gameObjects.cursor.view);
+  pixiApp.stage.addChild(gameObjects.debug.view);
 
   Keyboard.left.press = () => store.dispatch(keyPress("left"));
   Keyboard.right.press = () => store.dispatch(keyPress("right"));
